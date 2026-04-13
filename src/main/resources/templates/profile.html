@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Profile</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        body{
+            height:100vh;
+            margin:0;
+            font-family:'Segoe UI',sans-serif;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            overflow:hidden;
+        }
+
+        /* 🌈 BG */
+        body::before{
+            content:"";
+            position:fixed;
+            width:200%;
+            height:200%;
+            background:linear-gradient(45deg,#141e30,#243b55,#00c6ff,#6366f1);
+            animation:bgMove 12s infinite linear;
+            z-index:-1;
+        }
+
+        @keyframes bgMove{
+            0%{transform:translate(0,0)}
+            50%{transform:translate(-25%,-25%)}
+            100%{transform:translate(0,0)}
+        }
+
+        /* CARD */
+        .card-3d{
+            width:420px;
+            padding:30px;
+            border-radius:25px;
+            background:rgba(255,255,255,0.1);
+            backdrop-filter:blur(18px);
+            box-shadow:0 15px 40px rgba(0,0,0,0.4);
+            color:white;
+        }
+
+        /* INPUT */
+        .form-control{
+            border-radius:12px;
+            background:rgba(255,255,255,0.2);
+            color:white;
+            border:none;
+        }
+
+        .form-control::placeholder{
+            color:#ddd;
+        }
+
+        /* BUTTON */
+        .btn-custom{
+            border-radius:12px;
+            background:linear-gradient(45deg,#00c6ff,#6366f1);
+            border:none;
+        }
+
+        .btn-custom:hover{
+            transform:scale(1.05);
+        }
+
+        /* SECOND BUTTON */
+        .btn-view{
+            margin-top:10px;
+            border-radius:12px;
+            background:#10b981;
+            border:none;
+        }
+
+        /* POPUP */
+        .popup{
+            position:fixed;
+            top:20px;
+            right:20px;
+            background:#10b981;
+            color:white;
+            padding:12px 18px;
+            border-radius:10px;
+            opacity:0;
+            transition:0.3s;
+        }
+
+        .popup.show{
+            opacity:1;
+        }
+    </style>
+
+</head>
+
+<body>
+
+<!-- SUCCESS POPUP -->
+<div id="popup" class="popup">
+    ✅ Profile Saved!
+</div>
+
+<div class="card-3d text-center">
+
+    <h3 class="mb-3">👤 Create Profile</h3>
+
+    <img id="previewImg" src="https://via.placeholder.com/100" class="preview" style="width:100px;border-radius:50%;margin-bottom:10px;">
+
+    <form action="/profile" method="post" enctype="multipart/form-data" onsubmit="showPopup()">
+
+        <input name="name" class="form-control my-2" placeholder="Name" required>
+
+        <input name="skills" class="form-control my-2" placeholder="Skills">
+
+        <textarea name="bio" class="form-control my-2" placeholder="Bio"></textarea>
+
+        <input type="file" name="imageFile" class="form-control my-2" onchange="preview(event)" required>
+
+        <button class="btn btn-custom w-100 mt-2">
+            🚀 Save Profile
+        </button>
+
+    </form>
+
+    <!-- 🔥 VIEW PROFILE BUTTON -->
+    <a href="/view-profile" class="btn btn-view w-100 mt-2 text-white">
+        👁️ View Profile
+    </a>
+
+</div>
+
+<script>
+    function preview(event){
+        document.getElementById("previewImg").src =
+            URL.createObjectURL(event.target.files[0]);
+    }
+
+    // popup
+    function showPopup(){
+        const p = document.getElementById("popup");
+        p.classList.add("show");
+        setTimeout(()=>p.classList.remove("show"),2000);
+    }
+</script>
+
+</body>
+</html>
